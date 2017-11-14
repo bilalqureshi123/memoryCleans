@@ -78,10 +78,10 @@ public class Main22Activity extends AppCompatActivity {
     public static String floatForm (double d)
     {
 
-        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.N) {
-            return new DecimalFormat("#.##").format(d);
-        }
-        return null;
+        d= (double)Math.round(d * 1000d) / 1000d;
+
+        String total2 = String.valueOf(d);
+        return total2;
 
 
     }

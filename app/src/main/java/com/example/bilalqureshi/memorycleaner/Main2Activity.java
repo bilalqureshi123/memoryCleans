@@ -99,14 +99,14 @@ public class Main2Activity extends AppCompatActivity {
 
     public static String floatForm(double d) {
 
-        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.N) {
-            return new DecimalFormat("#.##").format(d);
-        }
-        return null;
+        d= (double)Math.round(d * 1000d) / 1000d;
+
+        String total2 = String.valueOf(d);
+        return total2;
 
 
     }
-
+/*
     @RequiresApi(api = Build.VERSION_CODES.N)
     public String getTotalRAM() {
 
@@ -156,38 +156,9 @@ public class Main2Activity extends AppCompatActivity {
         return lastValue;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    public String getCurrentRam() {
-        ActivityManager.MemoryInfo mi = new ActivityManager.MemoryInfo();
-        ActivityManager activityManager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
-        activityManager.getMemoryInfo(mi);
-        double availableMegs = mi.availMem / 0x100000L;
-        double mb = availableMegs / 1024.0;
-        double gb = availableMegs / 1048576.0;
-        double tb = availableMegs / 1073741824.0;
-        String lastValue = "";
-        double totRam = 0;
-        DecimalFormat twoDecimalForm = new DecimalFormat("#.##");
-
-        if (tb > 1) {
-            lastValue = twoDecimalForm.format(tb).concat(" TB");
-        } else if (gb > 1) {
-            lastValue = twoDecimalForm.format(gb).concat(" GB");
-        } else if (mb > 1) {
-            lastValue = twoDecimalForm.format(mb).concat(" MB");
-        } else {
-            lastValue = twoDecimalForm.format(totRam).concat(" KB");
-        }
-        return lastValue;
+    */
 
 
-//Percentage can be calculated for API 16+
-        /*
-        double percentAvail = mi.availMem / (double)mi.totalMem * 100.0;
-        */
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

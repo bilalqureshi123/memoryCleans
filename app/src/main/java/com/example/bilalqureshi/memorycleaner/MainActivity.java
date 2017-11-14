@@ -128,11 +128,11 @@ public void freeMem(){
     }
     public static String floatForm (double d)
     {
+       d= (double)Math.round(d * 1000d) / 1000d;
 
-        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.N) {
-            return new DecimalFormat("#.##").format(d);
-        }
-        return null;
+        String total2 = String.valueOf(d);
+        return total2;
+
 
 
     }

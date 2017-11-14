@@ -154,9 +154,9 @@ public void cacheSize(){
         final Intent mainIntent = new Intent(Intent.ACTION_MAIN, null);
         mainIntent.addCategory(Intent.CATEGORY_LAUNCHER);
 
-        ListView listView = (ListView) findViewById(R.id.ListView1);
+        final ListView listView = (ListView) findViewById(R.id.ListView1);
 TextView textView  = (TextView) findViewById(R.id.textView3);
-
+        final ArrayAdapter arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, arrayList);
         PackageManager packageManager = getApplicationContext().getPackageManager();
 
         List<PackageInfo> packs = packageManager.getInstalledPackages(PackageManager.GET_META_DATA);
@@ -192,6 +192,8 @@ TextView textView  = (TextView) findViewById(R.id.textView3);
                             String cd = bytesToHuman(pStats.externalDataSize);
                             String ss = strPackageName + "       " + cd;
                             arrayList.add(ss);
+                            arrayAdapter.notifyDataSetChanged();
+
                             Log.i("Spot", "Data Size: " + pStats.externalDataSize);
 
              xx[0] = pStats.externalDataSize+ xx[0];
@@ -252,7 +254,8 @@ String cpp = bytesToHuman(xx[0]);
 
         textView.setText(cpp);
 
-        ArrayAdapter arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, arrayList);
+
+        arrayAdapter.notifyDataSetChanged();
         listView.setAdapter(arrayAdapter);
     }
 

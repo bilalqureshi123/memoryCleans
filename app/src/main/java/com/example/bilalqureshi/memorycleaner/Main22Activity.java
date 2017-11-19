@@ -1,6 +1,8 @@
 package com.example.bilalqureshi.memorycleaner;
 
+import android.app.Application;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageStats;
@@ -20,8 +22,13 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.Calendar;
 import java.util.List;
 
 
@@ -117,84 +124,35 @@ public class Main22Activity extends AppCompatActivity {
         return totalSize;
     }
 
-    private static final long CACHE_APP = Long.MAX_VALUE;
-    private CachePackageDataObserver mClearCacheObserver;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main22);
+       // clearCachen();
 long cc;
         cc=getTotalSize();
         long b = FreeMemory();
 
-        final Intent mainIntent = new Intent(Intent.ACTION_MAIN, null);
-        mainIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+
+
+
+
+
+
         TextView textView = (TextView) findViewById(R.id.textView6);
         String cd=bytesToHuman(b);
         textView.setText("Internal Storage left " + cd);
 
         TextView textViewi  = (TextView) findViewById(R.id.textView3);
 
-        PackageManager packageManager = getApplicationContext().getPackageManager();
-
-        List<PackageInfo> packs = packageManager.getInstalledPackages(PackageManager.GET_META_DATA);
-        final long[] xx = {0};
-
-        final List pkgAppsList = getPackageManager().queryIntentActivities(mainIntent, 0);
-        for (Object object : pkgAppsList) {
-            ResolveInfo info = (ResolveInfo) object;
-            Drawable icon = getBaseContext().getPackageManager().getApplicationIcon(info.activityInfo.applicationInfo);
-            String strAppName = info.activityInfo.applicationInfo.publicSourceDir.toString();
-            final String strPackageName = info.activityInfo.applicationInfo.packageName.toString();
-
-            {
-                PackageManager pm = getPackageManager();
-
-
-                Method getPackageSizeInfo = null;
-                try {
-                    getPackageSizeInfo = pm.getClass().getMethod("getPackageSizeInfo", String.class, IPackageStatsObserver.class);
-                } catch (NoSuchMethodException e) {
-                    e.printStackTrace();
-                }
-
-                try {
-                    getPackageSizeInfo.invoke(pm, strPackageName, new IPackageStatsObserver.Stub() {
-
-                        @Override
-                        public void onGetStatsCompleted(PackageStats pStats, boolean succeeded)
-                                throws RemoteException {
-
-
-
-                            String cd = bytesToHuman(pStats.externalDataSize);
-                            String ss = strPackageName + "       " + cd;
-
-                            Log.i("Spot", "Data Size: " + pStats.externalDataSize);
-
-                            xx[0] = pStats.externalCacheSize+pStats.cacheSize+ xx[0];
-                        }
-                    });
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                } catch (InvocationTargetException e) {
-                    e.printStackTrace();
-
-                }
-
-
-                final String title = (String) ((info != null) ? getBaseContext().getPackageManager().getApplicationLabel(info.activityInfo.applicationInfo) : "???");
-
-            }
-
-
-    }
         toastmsg("Junk Memory Cleared");
 
-        String cbb;
-        cbb = bytesToHuman(xx[0]);
+       // String cbb;
+        //cbb = bytesToHuman(xx[0]);
 
-        textViewi.setText(cbb);
+//        textViewi.setText(cbb);
 
 
     }
@@ -203,70 +161,5 @@ long cc;
 
 
 
-    void clearCache()
-    {
-        if (mClearCacheObserver == null)
-        {
-            mClearCacheObserver=new CachePackageDataObserver();
-        }
 
-        PackageManager mPM=getPackageManager();
-
-        @SuppressWarnings("rawtypes")
-        final Class[] classes= { Long.TYPE, IPackageStatsObserver.class };
-
-        Long localLong=Long.valueOf(CACHE_APP);
-
-        try
-        {
-            Method localMethod=
-                    mPM.getClass().getMethod("freeStorageAndNotify", classes);
-
-      /*
-       * Start of inner try-catch block
-       */
-            try
-            {
-                localMethod.invoke(mPM, localLong, mClearCacheObserver);
-            }
-            catch (IllegalArgumentException e)
-            {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-            catch (IllegalAccessException e)
-            {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-            catch (InvocationTargetException e)
-            {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-      /*
-       * End of inner try-catch block
-       */
-        }
-        catch (NoSuchMethodException e1)
-        {
-            // TODO Auto-generated catch block
-            e1.printStackTrace();
-        }
-    }//End of clearCache() method
-
-    private class CachePackageDataObserver extends IPackageStatsObserver.Stub
-    {
-        public void onRemoveCompleted(String packageName, boolean succeeded)
-        {
-
-        }//End of onRemoveCompleted() method
-
-        @Override
-        public void onGetStatsCompleted(PackageStats pStats, boolean succeeded) throws RemoteException {
-
-        }
-
-
-    }//End of CachePackageDataObserver instance inner class
 }

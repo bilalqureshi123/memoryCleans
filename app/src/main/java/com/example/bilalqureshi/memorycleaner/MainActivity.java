@@ -16,9 +16,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -28,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
 
     //space
 
-public void butoncl(View view) {
+    public void butoncl(View view) {
     /*
    Intent intent = new Intent();
     intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
@@ -67,75 +70,72 @@ public void butoncl(View view) {
     }
     */
 
-    Intent intent = new Intent(getApplicationContext(),MainAppActivity.class);
-    startActivity(intent);
+
+        Intent intent = new Intent(this, MainAppActivity.class);
+
+        startActivity(intent);
 
 
-}
+    }
 
-public void freeMem(){
-    System.runFinalization();
-    Runtime.getRuntime().gc();
-    System.gc();
+    public void freeMem() {
+        System.runFinalization();
+        Runtime.getRuntime().gc();
+        System.gc();
 
-}
+    }
 
-    public  long TotalMemory()
-    {
+    public long TotalMemory() {
         StatFs statFs = new StatFs(Environment.getExternalStorageDirectory().getAbsolutePath());
-        long   Total  = ( (long) statFs.getBlockCountLong() * (long) statFs.getBlockSizeLong());
+        long Total = ((long) statFs.getBlockCountLong() * (long) statFs.getBlockSizeLong());
 
         return Total;
 
     }
 
-    public long FreeMemory()
-    {
+    public long FreeMemory() {
         StatFs statFs = new StatFs(Environment.getExternalStorageDirectory().getAbsolutePath());
-        long   Free   = (statFs.getAvailableBlocksLong() * (long) statFs.getBlockSizeLong());
+        long Free = (statFs.getAvailableBlocksLong() * (long) statFs.getBlockSizeLong());
         return Free;
     }
 
-    public long BusyMemory()
-    {
+    public long BusyMemory() {
         StatFs statFs = new StatFs(Environment.getExternalStorageDirectory().getAbsolutePath());
-        long   Total  = ((long) statFs.getBlockCountLong() * (long) statFs.getBlockSizeLong());
-        long   Free   = (statFs.getAvailableBlocksLong()   * (long) statFs.getBlockSizeLong());
-        long   Busy   = Total - Free;
+        long Total = ((long) statFs.getBlockCountLong() * (long) statFs.getBlockSizeLong());
+        long Free = (statFs.getAvailableBlocksLong() * (long) statFs.getBlockSizeLong());
+        long Busy = Total - Free;
         return Busy;
     }
 
 
-
-    public static String bytesToHuman (long size)
-    {
-        long Kb = 1  * 1024;
+    public static String bytesToHuman(long size) {
+        long Kb = 1 * 1024;
         long Mb = Kb * 1024;
         long Gb = Mb * 1024;
         long Tb = Gb * 1024;
         long Pb = Tb * 1024;
         long Eb = Pb * 1024;
 
-        if (size <  Kb)                 return floatForm(        size     ) + " byte";
-        if (size >= Kb && size < Mb)    return (floatForm((double)size / Kb)) + " Kb";
-        if (size >= Mb && size < Gb)    return floatForm((double)size / Mb) + " Mb";
-        if (size >= Gb && size < Tb)    return floatForm((double)size / Gb) + " Gb";
-        if (size >= Tb && size < Pb)    return floatForm((double)size / Tb) + " Tb";
-        if (size >= Pb && size < Eb)    return floatForm((double)size / Pb) + " Pb";
-        if (size >= Eb)                 return floatForm((double)size / Eb) + " Eb";
+        if (size < Kb) return floatForm(size) + " byte";
+        if (size >= Kb && size < Mb) return (floatForm((double) size / Kb)) + " Kb";
+        if (size >= Mb && size < Gb) return floatForm((double) size / Mb) + " Mb";
+        if (size >= Gb && size < Tb) return floatForm((double) size / Gb) + " Gb";
+        if (size >= Tb && size < Pb) return floatForm((double) size / Tb) + " Tb";
+        if (size >= Pb && size < Eb) return floatForm((double) size / Pb) + " Pb";
+        if (size >= Eb) return floatForm((double) size / Eb) + " Eb";
 
         return "---";
     }
-    public static String floatForm (double d)
-    {
-       d= (double)Math.round(d * 1000d) / 1000d;
+
+    public static String floatForm(double d) {
+        d = (double) Math.round(d * 1000d) / 1000d;
 
         String total2 = String.valueOf(d);
         return total2;
 
 
-
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -147,16 +147,38 @@ public void freeMem(){
         long a = TotalMemory();
         long b = FreeMemory();
 
-        String bj=bytesToHuman(a);
-        String cd=bytesToHuman(b);
+        String bj = bytesToHuman(a);
+        String cd = bytesToHuman(b);
         textView1.setText(bj);
         textView2.setText(cd);
+/*
+        String path = Environment.getExternalStorageDirectory().toString() + "/Android/data/com.twitter.android/cache/";
+        File cacheDirectory = getCacheDir();
+        Log.d("Files", "Path: " + cacheDirectory.getParent());
+        File directory = new File(path);
+
+        File[] files = directory.listFiles();
+*/
 
 
 
-
-
-
-
+      //  deleteDir(directory);
     }
+    /*
+    public static boolean deleteDir(File dir) {
+        if (dir != null && dir.isDirectory()) {
+            String[] children = dir.list();
+            for (int i = 0; i < children.length; i++) {
+                boolean success = deleteDir(new File(dir, children[i]));
+                if (!success) {
+                    return false;
+                }
+            }
+        }
+        return dir.delete();
+    }
+*/
 }
+
+
+

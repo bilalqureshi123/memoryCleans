@@ -11,14 +11,19 @@ import android.graphics.drawable.Drawable;
 import android.icu.text.DecimalFormat;
 import android.nfc.Tag;
 import android.os.Build;
+import android.os.Environment;
 import android.os.RemoteException;
 import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.content.pm.IPackageStatsObserver;
@@ -33,11 +38,7 @@ public class MainAppActivity extends AppCompatActivity {
 
     final ArrayList<String> arrayList = new ArrayList<>();
 
-    public void clearBut(View view) {
-        Intent intent = new Intent(getApplicationContext(), Main22Activity.class);
-        startActivity(intent);
 
-    }
 
     public String getCacheSize() throws PackageManager.NameNotFoundException {
         File cacheDir;
@@ -150,17 +151,20 @@ public void cacheSize(){
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_app);
-
+        /* ProgressBar spinner;
+        spinner = (ProgressBar)findViewById(R.id.progressBar1);
+        spinner.setVisibility(View.VISIBLE);*/
         final Intent mainIntent = new Intent(Intent.ACTION_MAIN, null);
         mainIntent.addCategory(Intent.CATEGORY_LAUNCHER);
 
         final ListView listView = (ListView) findViewById(R.id.ListView1);
-TextView textView  = (TextView) findViewById(R.id.textView3);
+final TextView textView  = (TextView) findViewById(R.id.textView3);
         final ArrayAdapter arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, arrayList);
         PackageManager packageManager = getApplicationContext().getPackageManager();
-
+final ArrayList<String> PackageN = new ArrayList<>();
         List<PackageInfo> packs = packageManager.getInstalledPackages(PackageManager.GET_META_DATA);
         final long[] xx = {0};
+        xx[0]=0;
 
         final List pkgAppsList = getPackageManager().queryIntentActivities(mainIntent, 0);
         for (Object object : pkgAppsList) {
@@ -181,22 +185,35 @@ TextView textView  = (TextView) findViewById(R.id.textView3);
                 }
 
                 try {
+
                     getPackageSizeInfo.invoke(pm, strPackageName, new IPackageStatsObserver.Stub() {
 
                         @Override
                         public void onGetStatsCompleted(PackageStats pStats, boolean succeeded)
                                 throws RemoteException {
+                            String cd = bytesToHuman(pStats.externalCacheSize);
+if (pStats.externalCacheSize==0 || cd == null){
+
+}
+else {
 
 
+    String ss = strPackageName + "  " + cd;
 
-                            String cd = bytesToHuman(pStats.externalDataSize);
-                            String ss = strPackageName + "       " + cd;
-                            arrayList.add(ss);
-                            arrayAdapter.notifyDataSetChanged();
+    arrayList.add(ss);
+    PackageN.add(strPackageName);
+    arrayAdapter.notifyDataSetChanged();
 
-                            Log.i("Spot", "Data Size: " + pStats.externalDataSize);
+    Log.i("Spot", "Data Size: " + ss);
 
-             xx[0] = pStats.externalDataSize+ xx[0];
+    xx[0] = pStats.externalCacheSize  + xx[0];
+
+    String cpp = bytesToHuman(xx[0]);
+
+    textView.setText(cpp);
+
+}
+
                         }
                     });
                 } catch (IllegalAccessException e) {
@@ -206,7 +223,7 @@ TextView textView  = (TextView) findViewById(R.id.textView3);
 
                 }
 
-                arrayList.add(strPackageName);
+
                 final String title = (String) ((info != null) ? getBaseContext().getPackageManager().getApplicationLabel(info.activityInfo.applicationInfo) : "???");
 
             }
@@ -244,19 +261,56 @@ TextView textView  = (TextView) findViewById(R.id.textView3);
             e.printStackTrace();
         }*/
 
-
+            Log.i("Spot", "Total Size:    " +xx[0]);
         }
 
 
 
 
-String cpp = bytesToHuman(xx[0]);
-
-        textView.setText(cpp);
 
 
-        arrayAdapter.notifyDataSetChanged();
+
+
+
         listView.setAdapter(arrayAdapter);
+
+
+
+
+
+        Button b = (Button) findViewById(R.id.button);
+        b.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                for (int i = 0; i < PackageN.size(); i++){
+                    String path = Environment.getExternalStorageDirectory().toString() + "/Android/data/"+PackageN.get(i)+"/cache/";
+                File cacheDirectory = getCacheDir();
+                Log.d("Files", "Path: " + cacheDirectory.getParent());
+                File directory = new File(path);
+
+
+
+deleteDir(directory);
+
+            }
+                Intent intent = new Intent(getApplicationContext(), Main22Activity.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+    public static boolean deleteDir(File dir) {
+        if (dir != null && dir.isDirectory()) {
+            String[] children = dir.list();
+            for (int i = 0; i < children.length; i++) {
+                boolean success = deleteDir(new File(dir, children[i]));
+                if (!success) {
+                    return false;
+                }
+            }
+        }
+        return dir.delete();
     }
 
 

@@ -168,9 +168,9 @@ final ArrayList<String> PackageN = new ArrayList<>();
 
         final List pkgAppsList = getPackageManager().queryIntentActivities(mainIntent, 0);
         for (Object object : pkgAppsList) {
-            ResolveInfo info = (ResolveInfo) object;
+            final ResolveInfo info = (ResolveInfo) object;
             Drawable icon = getBaseContext().getPackageManager().getApplicationIcon(info.activityInfo.applicationInfo);
-            String strAppName = info.activityInfo.applicationInfo.publicSourceDir.toString();
+            final String strAppName = info.activityInfo.applicationInfo.publicSourceDir.toString();
             final String strPackageName = info.activityInfo.applicationInfo.packageName.toString();
 
             {
@@ -191,22 +191,25 @@ final ArrayList<String> PackageN = new ArrayList<>();
                         @Override
                         public void onGetStatsCompleted(PackageStats pStats, boolean succeeded)
                                 throws RemoteException {
-                            String cd = bytesToHuman(pStats.externalCacheSize);
+                            String cd = bytesToHuman(pStats.externalCacheSize+pStats.cacheSize);
 if (pStats.externalCacheSize==0 || cd == null){
 
 }
 else {
 
+    final String title = (String) ((info != null) ? getBaseContext().getPackageManager().getApplicationLabel(info.activityInfo.applicationInfo) : "???");
+    String ss = title + "            " + cd;
 
-    String ss = strPackageName + "  " + cd;
 
     arrayList.add(ss);
     PackageN.add(strPackageName);
     arrayAdapter.notifyDataSetChanged();
 
+
+
     Log.i("Spot", "Data Size: " + ss);
 
-    xx[0] = pStats.externalCacheSize  + xx[0];
+    xx[0] = pStats.externalCacheSize +pStats.cacheSize + xx[0];
 
     String cpp = bytesToHuman(xx[0]);
 
@@ -224,7 +227,6 @@ else {
                 }
 
 
-                final String title = (String) ((info != null) ? getBaseContext().getPackageManager().getApplicationLabel(info.activityInfo.applicationInfo) : "???");
 
             }
 

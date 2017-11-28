@@ -34,6 +34,17 @@ import java.util.regex.Pattern;
 public class Main2Activity extends AppCompatActivity {
 
 
+    @Override
+    public void onBackPressed(){
+
+
+
+        Intent intent = new Intent(this,MainActivity.class);
+        startActivity(intent);
+        finish();
+
+
+    }
     public void butClick(View view) {
     /*
     final Intent mainIntent = new Intent(Intent.ACTION_MAIN, null);
@@ -219,5 +230,9 @@ String cd ="Total Junk files are :            " + bytesToHuman(totalsize[0]);
 
             textView.setText(cd);
         }
+
+
+
     }
+
 }

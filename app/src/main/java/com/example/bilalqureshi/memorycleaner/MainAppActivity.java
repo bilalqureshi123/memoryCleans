@@ -286,8 +286,10 @@ else {
             public void onClick(View view) {
 
                 for (int i = 0; i < PackageN.size(); i++){
-                    String path = Environment.getExternalStorageDirectory().toString() + "/Android/data/"+PackageN.get(i)+"/cache/";
+                    String path = Environment.getExternalStorageDirectory().toString() + "/Android/data/"+PackageN.get(i);
+                     String pathn = "storage/sdcard0/data/user/0/"+PackageN.get(i);
                 File cacheDirectory = getCacheDir();
+
                 Log.d("Files", "Path: " + cacheDirectory.getParent());
                 File directory = new File(path);
 
@@ -296,7 +298,8 @@ else {
 deleteDir(directory);
 
             }
-                Intent intent = new Intent(getApplicationContext(), Main22Activity.class);
+
+                Intent intent = new Intent(getApplicationContext(), splashScreen2.class);
                 startActivity(intent);
             }
         });

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.bilalqureshi.memorycleaner.MainActivity"
-    android:background="@drawable/rectangle">
+    android:background="@drawable/bluegreen">
 
     <TextView
         android:id="@+id/textView14"
@@ -13,6 +13,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-smallcaps"
         android:text="Memory Left"
+        android:textColor="@android:color/background_light"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.048"
@@ -27,6 +28,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-smallcaps"
         android:text="Total Memory"
+        android:textColor="@android:color/background_light"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.049"
@@ -41,6 +43,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="monospace"
         android:text="TextView"
+        android:textColor="@android:color/background_light"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -53,16 +56,15 @@
     <Button
         android:id="@+id/button1"
         android:layout_width="216dp"
-        android:layout_height="44dp"
+        android:layout_height="48dp"
         android:onClick="butoncl"
         android:text=""
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginBottom="63dp"
+        android:layout_marginBottom="61dp"
         android:background="@drawable/grop"
-        app:layout_constraintHorizontal_bias="0.507"
-        tools:layout_editor_absoluteY="552dp" />
+        app:layout_constraintHorizontal_bias="0.577" />
 
     <TextView
         android:id="@+id/memoryview"
@@ -70,6 +72,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="monospace"
         android:text="TextView"
+        android:textColor="@android:color/background_light"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -77,7 +80,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.322" />
+        app:layout_constraintVertical_bias="0.33" />
 
     <TextView
         android:id="@+id/textView11"
@@ -86,13 +89,14 @@
         android:fontFamily="sans-serif-smallcaps"
         android:text="Internal Memory"
         android:textAllCaps="true"
+        android:textColor="@android:color/background_light"
         android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.555"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.209"
-        app:layout_constraintHorizontal_bias="0.541" />
+        app:layout_constraintVertical_bias="0.198" />
 
     <ImageView
         android:id="@+id/imageView"
@@ -103,9 +107,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/textView11"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintVertical_bias="0.315"
-        tools:layout_editor_absoluteY="37dp"
-        tools:layout_editor_absoluteX="104dp" />
+        app:layout_constraintVertical_bias="0.319"
+        app:layout_constraintHorizontal_bias="0.582" />
 
 </android.support.constraint.ConstraintLayout>

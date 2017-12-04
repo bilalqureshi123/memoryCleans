@@ -33,6 +33,17 @@ import java.util.List;
 
 
 public class Main22Activity extends AppCompatActivity {
+    @Override
+    public void onBackPressed(){
+
+
+
+        Intent intent = new Intent(this,MainActivity.class);
+        startActivity(intent);
+        
+
+
+    }
     public void toastmsg(String ss){
         Toast.makeText(this,ss, Toast.LENGTH_SHORT).show();
     }

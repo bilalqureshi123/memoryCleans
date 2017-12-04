@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
     */
 
 
-        Intent intent = new Intent(this, MainAppActivity.class);
+        Intent intent = new Intent(this, splashScreen.class);
 
         startActivity(intent);
 
